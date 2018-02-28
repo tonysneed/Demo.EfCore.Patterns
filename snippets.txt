@@ -1,0 +1,32 @@
+    public class MyDbContextFactory : IDesignTimeDbContextFactory<MyDemoDbContext>
+    {
+        public MyDemoDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MyDemoDbContext>();
+            optionsBuilder.UseSqlServer(
+                "Data Source=(local);initial catalog=MyDemoDb;Integrated Security=True; MultipleActiveResultSets=True");
+            return new MyDemoDbContext(optionsBuilder.Options);
+        }
+    }
+
+    public class MyDemoDbContext : DbContext
+    {
+        public DbSet<Product> Products { get; set; }
+
+        public MyDemoDbContext(DbContextOptions<MyDemoDbContext> options) : base(options)
+        {   
+        }
+    }
+
+  "ConnectionStrings": {
+    "MyDemoDbContext": "Data Source=.;initial catalog=MyDemoDb;Integrated Security=True; MultipleActiveResultSets=True"
+  }
+
+
+            var connectionString = Configuration.GetConnectionString(nameof(MyDemoDbContext));
+            services.AddDbContext<MyDemoDbContext>(options => options.UseSqlServer(connectionString));
+
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+
+
+	dotnet new -i "AspNetCore.WebApi.Templates::1.0.0-*"
